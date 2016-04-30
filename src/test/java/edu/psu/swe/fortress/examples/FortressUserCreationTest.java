@@ -30,6 +30,7 @@ public class FortressUserCreationTest {
 	@Test
 	public void createUser() throws SecurityException{
 		//users must belong to an OU, so create the User OU first
+		//OUs allow restricting what can be done (i.e. assign user to role) via ARBAC roles
 		OrgUnit orgUnit = delAdminMgr.add(new OrgUnit(USER_OU, Type.USER));
 		Assert.assertEquals("Org Unit name wrong", USER_OU, orgUnit.getName());
 		
