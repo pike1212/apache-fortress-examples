@@ -12,7 +12,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class FortressUserCreationTest {
+public class UserCreationTest {
 
 	private static final String USER_ID = "test-user-1";
 	private static final String USER_OU = "test-ou";
