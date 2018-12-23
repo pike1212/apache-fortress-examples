@@ -9,9 +9,9 @@ import org.apache.directory.fortress.core.model.OrgUnit;
 import org.apache.directory.fortress.core.model.OrgUnit.Type;
 import org.apache.directory.fortress.core.model.PermObj;
 import org.apache.directory.fortress.core.model.Permission;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class PermissionCreationTest {
 	
@@ -24,7 +24,7 @@ public class PermissionCreationTest {
 	private AdminMgr adminMgr;
 	private DelAdminMgr delAdminMgr;
 	
-	@Before
+	@BeforeAll
 	public void initializeManagers() throws SecurityException{
 		//managers created without sessions will not have ARBAC checks performed
 		adminMgr = AdminMgrFactory.createInstance();
@@ -36,28 +36,26 @@ public class PermissionCreationTest {
 		//permission objects must belong to an OU, so create the Perm OU first
 		//OUs allow restricting what can be done (i.e. assign permission to role) via ARBAC roles
 		OrgUnit orgUnit = delAdminMgr.add(new OrgUnit(PERM_OU, Type.PERM));
-		Assert.assertEquals("Org Unit name wrong", PERM_OU, orgUnit.getName());
+		Assertions.assertEquals("Org Unit name wrong", PERM_OU, orgUnit.getName());
 		
 		//create a new perm object object, assigned to created OU
 		PermObj createdObj = adminMgr.addPermObj(new PermObj(PERM_OBJ, PERM_OU));
-		Assert.assertEquals(PERM_OBJ, createdObj.getObjName());
-		Assert.assertEquals(PERM_OU, createdObj.getOu());
+		Assertions.assertEquals(PERM_OBJ, createdObj.getObjName());
+		Assertions.assertEquals(PERM_OU, createdObj.getOu());
 		
 		//create an operation for the object
 		Permission createdPermission = adminMgr.addPermission(new Permission(PERM_OBJ, PERM_OPERATION));
-		Assert.assertEquals(PERM_OBJ, createdPermission.getObjName());
-		Assert.assertEquals(PERM_OPERATION, createdPermission.getOpName());
-		Assert.assertEquals(PERM_ABSTRACT_NAME, createdPermission.getAbstractName());
-		Assert.assertNotNull(createdPermission.getInternalId());
+		Assertions.assertEquals(PERM_OBJ, createdPermission.getObjName());
+		Assertions.assertEquals(PERM_OPERATION, createdPermission.getOpName());
+		Assertions.assertEquals(PERM_ABSTRACT_NAME, createdPermission.getAbstractName());
+		Assertions.assertNotNull(createdPermission.getInternalId());
 		
 		//permission can also be created with an object id, this explodes the number or permissions, 
 		//but allows finer grained control over objects. An object can be any id in your system.
 		Permission createdPermissionWithObjectId = adminMgr.addPermission(new Permission(PERM_OBJ, PERM_OPERATION, PERM_OBJECT_ID));
-		Assert.assertEquals(PERM_OBJ, createdPermissionWithObjectId.getObjName());
-		Assert.assertEquals(PERM_OPERATION, createdPermissionWithObjectId.getOpName());
-		Assert.assertEquals(PERM_OBJECT_ID, createdPermissionWithObjectId.getObjId());
-		Assert.assertNotNull(createdPermission.getInternalId());
-		
-		
+		Assertions.assertEquals(PERM_OBJ, createdPermissionWithObjectId.getObjName());
+		Assertions.assertEquals(PERM_OPERATION, createdPermissionWithObjectId.getOpName());
+		Assertions.assertEquals(PERM_OBJECT_ID, createdPermissionWithObjectId.getObjId());
+		Assertions.assertNotNull(createdPermission.getInternalId());
 	}
 }

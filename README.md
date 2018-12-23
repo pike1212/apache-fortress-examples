@@ -1,5 +1,7 @@
 # fortress-examples
 
+Java code examples for how to use the Apache Fortress API.
+
 1. Build docker image with some base data 
 
 ```
